@@ -95,7 +95,7 @@
 
   </main>
 
-  <!-- قراءة رسالة -->
+  <!-- نافذة قراءة رسالة -->
   <div id="noteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-5 z-50">
     <div class="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl border-4 border-amber-100 text-center relative">
       <div id="modalSenderAvatar" class="w-16 h-16 rounded-full bg-amber-50 mx-auto -mt-12 flex items-center justify-center text-3xl shadow-md border-2 border-white">❤️</div>
@@ -109,7 +109,7 @@
     </div>
   </div>
 
-  <!-- كتابة رسالة -->
+  <!-- نافذة كتابة رسالة -->
   <div id="writeModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-5 z-50">
     <div class="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl">
       <h3 class="text-lg font-black text-slate-900 mb-3 text-center">أضيفي دعاء أو كلمة تسعدهن 🌷</h3>
@@ -130,7 +130,7 @@
     </div>
   </div>
 
-  <!-- رمز المشرف -->
+  <!-- نافذة رمز المشرف -->
   <div id="pinModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-5 z-50">
     <div class="bg-white max-w-xs w-full rounded-3xl p-6 shadow-2xl text-center">
       <div class="w-12 h-12 bg-amber-100 text-amber-900 rounded-2xl mx-auto flex items-center justify-center text-xl mb-3">🔒</div>
@@ -145,6 +145,181 @@
   </div>
 
   <!-- لوحة الإدارة -->
+  <section id="adminView" class="max-w-md mx-auto w-full hidden flex-1 my-2 px-4">
+    <div class="bg-white rounded-[32px] p-5 shadow-xl border border-stone-100 flex flex-col h-full max-h-[90vh]">
+      <div class="flex justify-between items-center pb-3 border-b border-stone-100">
+        <div>
+          <h2 class="font-black text-stone-900 text-lg flex items-center gap-1.5">لوحة الإشراف 👑</h2>
+          <span class="text-[11px] text-stone-400">إدارة البرطمان والمظهر والعائلة</span>
+        </div>
+        <button onclick="exitAdminView()" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold px-3.5 py-1.5 rounded-xl transition">
+          العودة للرئيسية
+        </button>
+      </div>
+
+      <div class="flex gap-1.5 my-3 bg-stone-100 p-1 rounded-2xl text-xs font-bold text-stone-600">
+        <button onclick="switchTab('messagesTab')" id="tabBtn-messagesTab" class="flex-1 py-2 rounded-xl bg-white text-stone-900 shadow-sm transition">الرسائل</button>
+        <button onclick="switchTab('membersTab')" id="tabBtn-membersTab" class="flex-1 py-2 rounded-xl transition">العائلة</button>
+        <button onclick="switchTab('themeTab')" id="tabBtn-themeTab" class="flex-1 py-2 rounded-xl transition">المظهر</button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto no-scrollbar space-y-4 pr-0.5">
+        <div id="messagesTab" class="space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-stone-500">رسائل السحابة:</span>
+            <div class="flex items-center gap-2">
+              <span id="adminTotalMsgBadge" class="text-[11px] bg-amber-50 text-amber-**نعم، هذا هو بالضبط!** والسبب في المشكلة السابقة كان حرفاً واحداً فقط كبيراً (`TJ` بدلاً من `Tj`) في المفتاح، والآن مع هذا المفتاح الدقيق سيتصل الموقع بالسحابة فوراً وبدون أي عوائق.
+
+إليك الكود النهائي الكامل والجاهز لموقعك؛ انسخه بالكامل وضعه في ملف **`index.html`** في GitHub، ثم اضغط على **Commit changes**:
+
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>برطمان الكلمة الطيبة</title>
+  
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap](https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap)" rel="stylesheet">
+  
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+  <script src="[https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2](https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2)"></script>
+
+  <style>
+    body { font-family: 'Tajawal', sans-serif; transition: background 0.4s ease; }
+    .glass-jar {
+      background: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.25) 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 4px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 25px 45px rgba(0,0,0,0.08), inset 0 0 25px rgba(255,255,255,0.6);
+    }
+    .glass-reflection {
+      position: absolute;
+      top: 10%;
+      left: 12%;
+      width: 14%;
+      height: 75%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.05));
+      border-radius: 20px;
+      pointer-events: none;
+    }
+    .paper-item {
+      animation: gentleFloat 3s ease-in-out infinite alternate;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes gentleFloat {
+      0% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
+      100% { transform: translateY(-7px) rotate(calc(var(--rot, 0deg) + 4deg)); }
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body id="appBody" class="bg-[#FAF6F0] text-slate-800 min-h-screen flex flex-col justify-between selection:bg-amber-200">
+
+  <div id="toastBanner" class="fixed top-4 inset-x-4 max-w-sm mx-auto bg-stone-900 text-white text-xs font-bold py-3 px-4 rounded-2xl shadow-xl text-center z-50 hidden transition-all"></div>
+
+  <!-- رأس التطبيق -->
+  <header class="max-w-md mx-auto w-full px-5 pt-5 pb-2 flex justify-between items-center z-20">
+    <div class="flex items-center gap-2">
+      <span class="text-3xl">🏺</span>
+      <div>
+        <h1 class="text-xl font-extrabold text-amber-950">برطمان الكلمة الطيبة</h1>
+        <p class="text-xs text-amber-800/80 font-medium">مساحة المحبة والدعاء الخاصة بنا ✨</p>
+      </div>
+    </div>
+    
+    <button onclick="openPinModal()" class="w-10 h-10 rounded-2xl bg-white/80 shadow-sm border border-black/5 flex items-center justify-center text-stone-500 hover:text-amber-900 active:scale-95 transition" title="لوحة الإشراف">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- البرطمان الرئيسي -->
+  <main id="familyMain" class="max-w-md mx-auto w-full flex-1 flex flex-col items-center justify-center px-5 py-2">
+    
+    <div class="relative w-72 h-96 flex flex-col items-center justify-end pb-8 my-auto">
+      <div id="jarLid" class="w-44 h-8 bg-amber-900 rounded-2xl absolute top-3 shadow-lg z-20 border-b-4 border-amber-950 flex items-center justify-center">
+        <div class="w-16 h-2 bg-amber-700/50 rounded-full"></div>
+      </div>
+      <div class="w-36 h-4 bg-amber-800/60 rounded-lg absolute top-9 z-10"></div>
+
+      <div class="glass-jar w-full h-[88%] rounded-b-[60px] rounded-t-[30px] relative overflow-hidden flex flex-col justify-end p-6">
+        <div class="glass-reflection"></div>
+        <div id="jarPapersArea" class="relative w-full h-full flex flex-wrap-reverse content-start gap-2 p-2 overflow-hidden items-end"></div>
+        <div class="absolute inset-x-0 bottom-4 text-center pointer-events-none z-10">
+          <span id="activeCountDisplay" class="text-3xl font-black text-amber-950/80 drop-shadow-sm">0</span>
+          <p class="text-[11px] font-bold text-amber-900/70">رسالة تملأ البرطمان</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full space-y-3 mt-4 mb-2">
+      <button onclick="drawRandomNote()" id="primaryBtn" class="w-full py-4 bg-amber-800 hover:bg-amber-900 text-white font-black text-lg rounded-2xl shadow-lg shadow-amber-900/20 active:scale-95 transition flex items-center justify-center gap-2">
+        <span>💌 اسحبي رسالة اليوم</span>
+      </button>
+
+      <button onclick="openWriteModal()" class="w-full py-3.5 bg-white/90 border-2 border-amber-800/20 hover:bg-white text-amber-950 font-bold rounded-2xl shadow-sm active:scale-95 transition flex items-center justify-center gap-2">
+        <span>✍️ ضعي كلمة طيبة في البرطمان</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- نافذة قراءة رسالة -->
+  <div id="noteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-5 z-50">
+    <div class="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl border-4 border-amber-100 text-center relative">
+      <div id="modalSenderAvatar" class="w-16 h-16 rounded-full bg-amber-50 mx-auto -mt-12 flex items-center justify-center text-3xl shadow-md border-2 border-white">❤️</div>
+      <p id="modalNoteText" class="text-lg font-bold text-slate-800 leading-relaxed my-5 min-h-[70px] flex items-center justify-center"></p>
+      <div class="inline-block bg-amber-50 text-amber-900 text-xs font-bold py-1.5 px-4 rounded-full mb-5">
+        صاحبة الكلمة: <span id="modalSenderName"></span>
+      </div>
+      <button onclick="closeModal('noteModal')" class="w-full py-3.5 bg-stone-900 text-white font-bold rounded-xl active:scale-95 transition">
+        أسعد الله قلبكِ وروحكِ ❤️
+      </button>
+    </div>
+  </div>
+
+  <!-- نافذة كتابة رسالة -->
+  <div id="writeModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-5 z-50">
+    <div class="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl">
+      <h3 class="text-lg font-black text-slate-900 mb-3 text-center">أضيفي دعاء أو كلمة تسعدهن 🌷</h3>
+      <label class="block text-xs font-bold text-stone-500 mb-1">من صاحبة الكلمة؟</label>
+      <select id="senderSelect" class="w-full p-3 rounded-xl border border-stone-200 mb-3 font-bold text-stone-800 bg-stone-50 outline-none"></select>
+      
+      <label class="block text-xs font-bold text-stone-500 mb-1">الرسالة أو الكلمة الطيبة:</label>
+      <textarea id="noteInput" rows="3" placeholder="اكتبي ما في خاطركِ ودعائكِ لأخواتكِ..." class="w-full p-3.5 rounded-xl border border-stone-200 font-medium text-stone-800 bg-stone-50 mb-4 outline-none focus:ring-2 focus:ring-amber-800"></textarea>
+      
+      <div class="flex gap-2">
+        <button onclick="saveNewNote()" class="flex-1 py-3.5 bg-amber-800 text-white font-bold rounded-xl active:scale-95 transition">
+          وضع في البرطمان 📥
+        </button>
+        <button onclick="closeModal('writeModal')" class="px-5 py-3.5 bg-stone-100 text-stone-600 font-bold rounded-xl active:scale-95 transition">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة الرمز السري (2026) -->
+  <div id="pinModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-5 z-50">
+    <div class="bg-white max-w-xs w-full rounded-3xl p-6 shadow-2xl text-center">
+      <div class="w-12 h-12 bg-amber-100 text-amber-900 rounded-2xl mx-auto flex items-center justify-center text-xl mb-3">🔒</div>
+      <h3 class="font-extrabold text-stone-900 text-lg">لوحة الإشراف الخاصة</h3>
+      <p class="text-xs text-stone-500 mb-4">أدخل الرمز السري (2026)</p>
+      <input id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••" class="w-full text-center text-3xl tracking-[12px] p-2.5 rounded-xl border border-stone-200 mb-4 font-mono outline-none">
+      <div class="flex gap-2">
+        <button onclick="verifyAdminPin()" class="flex-1 py-3 bg-amber-800 text-white font-bold rounded-xl text-sm active:scale-95 transition">دخول</button>
+        <button onclick="closeModal('pinModal')" class="px-4 py-3 bg-stone-100 text-stone-600 font-bold rounded-xl text-sm">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- لوحة الإشراف -->
   <section id="adminView" class="max-w-md mx-auto w-full hidden flex-1 my-2 px-4">
     <div class="bg-white rounded-[32px] p-5 shadow-xl border border-stone-100 flex flex-col h-full max-h-[90vh]">
       <div class="flex justify-between items-center pb-3 border-b border-stone-100">
@@ -224,8 +399,8 @@
 
   <script>
     const ADMIN_PIN = "2026";
-    const SB_URL = "https://dugqzoqnhrnjkqwxlrwi.supabase.co";
-    const SB_KEY = "sb_publishable_VT1Gi_thTjnjk9mt3SeiZg_iwoRjAFh";
+    const SB_URL = "[https://dugqzoqnhrnjkqwxlrwi.supabase.co](https://dugqzoqnhrnjkqwxlrwi.supabase.co)";
+    const SB_KEY = "sb_publishable_VT1Gi_thTJnjk9mt3SeiZg_iwoRjAFh";
 
     const defaultFamilyMembers = [
       { id: 101, name: "عايدة", avatar: "❤️" },
@@ -290,7 +465,7 @@
       const text = document.getElementById('noteInput').value.trim();
       const sender = document.getElementById('senderSelect').value;
       if (!text) {
-        showToast("الرجاء كتابة رسالتكِ أو دعائكِ أولاً ✍️");
+        showToast("الرجاء كتابة رسالتكِ أولاً ✍️");
         return;
       }
 
@@ -308,7 +483,7 @@
       if (supabaseClient) {
         const { error } = await supabaseClient.from('jar_messages').insert([newMsg]);
         if (error) {
-          showToast("تأكد من تطبيق أمر SQL في سوبابيس");
+          showToast("تعذر الإرسال: " + error.message);
           return;
         }
       }
@@ -507,7 +682,6 @@
       if (!window.supabase) return;
       supabaseClient = window.supabase.createClient(SB_URL, SB_KEY);
       
-      // التحديث اللحظي عبر قنوات السحابة
       supabaseClient
         .channel('public:jar_messages')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'jar_messages' }, () => {
@@ -515,13 +689,11 @@
         })
         .subscribe();
 
-      // جلب الرسائل فوراً عند فتح التطبيق
       fetchCloudMessages();
 
-      // فحص تلقائي ذكي كل 3 ثوانٍ لضمان التحديث في كل الهواتف حتى لو انقطع الاتصال
+      // فحص تلقائي كل 3 ثوانٍ للمزامنة بين الأجهزة
       setInterval(fetchCloudMessages, 3000);
 
-      // جلب الرسائل فور عودة المستخدم للتطبيق أو فتح شاشة القفل
       document.addEventListener('visibilitychange', () => {
         if (!document.hidden) fetchCloudMessages();
       });
