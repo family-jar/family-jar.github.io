@@ -247,11 +247,11 @@
   <script>
     const ADMIN_PIN = "2026";
 
-    // بيانات الاتصال السحابي المباشرة
+    // بيانات الاتصال بالسحابة
     const SB_URL = "https://dugqzoqnhrnjkqwxlrwi.supabase.co";
     const SB_KEY = "sb_publishable_VT1Gi_thTjnjk9mt3SeiZg_iwoRjAFh";
 
-    // قائمة الأسماء المحدثة بالعائلة مع قلوب وإيموجيات مميزة لكل واحدة
+    // قائمة أسماء العائلة المعتمدة
     let familyMembers = JSON.parse(localStorage.getItem('jar_family_v2')) || [
       { id: 1, name: "عايدة", avatar: "❤️" },
       { id: 2, name: "مريم", avatar: "💖" },
@@ -262,11 +262,8 @@
       { id: 7, name: "مبروكة", avatar: "💚" }
     ];
 
-    let messages = [
-      { id: 1, sender: "عايدة", text: "الله يحفظكم ويديم لمتنا ومحبتنا ولا يحرمني منكم أبداً.", active: true, date: "اليوم" },
-      { id: 2, sender: "مريم", text: "صباح الخير والسعادة لأحلى وأغلى أخوات، يومكم مبارك وخفيف يارب.", active: true, date: "أمس" },
-      { id: 3, sender: "نورة", text: "وجودكم بجانبي في كل وقت هو أكبر نعمة من ربي.", active: true, date: "السبت" }
-    ];
+    // تبدأ القائمة فارغة ليتم جلب كل شيء من السحابة مباشرة
+    let messages = [];
 
     let currentTheme = localStorage.getItem('jar_theme') || 'amber';
     let soundEnabled = localStorage.getItem('jar_sound') !== 'false';
@@ -355,7 +352,7 @@
       if (supabaseClient) {
         const { error } = await supabaseClient.from('jar_messages').insert([newMsg]);
         if (error) {
-          alert("خطأ أثناء الإرسال: " + error.message);
+          alert("خطأ أثناء الإرسال إلى السحابة: " + error.message);
           return;
         }
         await fetchCloudMessages();
@@ -418,6 +415,10 @@
       const msgContainer = document.getElementById('adminMessagesContainer');
       msgContainer.innerHTML = '';
 
+      if (messages.length === 0) {
+        msgContainer.innerHTML = '<p class="text-center text-stone-400 py-6 text-xs">لا توجد رسائل حالياً في البرطمان.</p>';
+      }
+
       messages.forEach(msg => {
         const card = document.createElement('div');
         card.className = `p-3 rounded-2xl border text-xs flex flex-col gap-2 ${msg.active ? 'bg-stone-50 border-stone-200' : 'bg-stone-100 border-dashed border-stone-300 opacity-60'}`;
@@ -473,24 +474,34 @@
     async function toggleMsgStatus(id) {
       const msg = messages.find(m => m.id === id);
       if (msg) {
-        msg.active = !msg.active;
+        const targetStatus = !msg.active;
         if (supabaseClient) {
-          await supabaseClient.from('jar_messages').update({ active: msg.active }).eq('id', id);
+          const { error } = await supabaseClient.from('jar_messages').update({ active: targetStatus }).eq('id', id);
+          if (error) {
+            alert("فشل التعديل في السحابة: " + error.message);
+            return;
+          }
         }
+        msg.active = targetStatus;
         renderAdminDashboard();
         renderJarPapers();
       }
     }
 
     async function deleteMsg(id) {
-      if (confirm("هل تريد بالتأكيد حذف هذه الرسالة نهائياً؟")) {
-        if (supabaseClient) {
-          await supabaseClient.from('jar_messages').delete().eq('id', id);
+      if (!confirm("هل تريد بالتأكيد حذف هذه الرسالة نهائياً؟")) return;
+      
+      if (supabaseClient) {
+        const { error } = await supabaseClient.from('jar_messages').delete().eq('id', id);
+        if (error) {
+          alert("⚠️ السحابة رفضت الحذف: " + error.message);
+          return;
         }
-        messages = messages.filter(m => m.id !== id);
-        renderAdminDashboard();
-        renderJarPapers();
       }
+      messages = messages.filter(m => m.id !== id);
+      renderAdminDashboard();
+      renderJarPapers();
+      alert("تم الحذف نهائياً ولن تعود أبداً 🗑️");
     }
 
     function addNewMember() {
@@ -554,7 +565,7 @@
         supabaseClient = window.supabase.createClient(SB_URL, SB_KEY);
         supabaseClient
           .channel('public:jar_messages')
-          .on('postgres_changes', { event: '*', schema: 'public', table: 'jar_messages' }, payload => {
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'jar_messages' }, () => {
             fetchCloudMessages();
           })
           .subscribe();
@@ -564,8 +575,8 @@
 
     async function fetchCloudMessages() {
       if (!supabaseClient) return;
-      const { data } = await supabaseClient.from('jar_messages').select('*').order('id', { ascending: false });
-      if (data && data.length > 0) {
+      const { data, error } = await supabaseClient.from('jar_messages').select('*').order('id', { ascending: false });
+      if (!error && data) {
         messages = data;
         renderJarPapers();
         if (!document.getElementById('adminView').classList.contains('hidden')) {
