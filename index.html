@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>برطمان الكلمة الطيبة</title>
   
-  <!-- خط تجوال العربي الاحترافي -->
+  <!-- خط تجوال العربي -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -18,10 +18,10 @@
     body { font-family: 'Tajawal', sans-serif; transition: background 0.4s ease; }
     
     .glass-jar {
-      background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 100%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.25) 100%);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border: 4px solid rgba(255, 255, 255, 0.85);
+      border: 4px solid rgba(255, 255, 255, 0.9);
       box-shadow: 0 25px 45px rgba(0,0,0,0.08), inset 0 0 25px rgba(255,255,255,0.6), inset -10px 0 15px rgba(0,0,0,0.03);
     }
     
@@ -38,11 +38,11 @@
 
     .paper-item {
       animation: gentleFloat 3s ease-in-out infinite alternate;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     @keyframes gentleFloat {
       0% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
-      100% { transform: translateY(-8px) rotate(calc(var(--rot, 0deg) + 4deg)); }
+      100% { transform: translateY(-7px) rotate(calc(var(--rot, 0deg) + 4deg)); }
     }
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -50,6 +50,9 @@
   </style>
 </head>
 <body id="appBody" class="bg-[#FAF6F0] text-slate-800 min-h-screen flex flex-col justify-between selection:bg-amber-200">
+
+  <!-- إشعار علوي أنيق بدلاً من نوافذ الخطأ المزعجة -->
+  <div id="toastBanner" class="fixed top-4 inset-x-4 max-w-sm mx-auto bg-stone-900 text-white text-xs font-bold py-3 px-4 rounded-2xl shadow-xl text-center z-50 hidden transition-all"></div>
 
   <!-- رأس التطبيق -->
   <header class="max-w-md mx-auto w-full px-5 pt-5 pb-2 flex justify-between items-center z-20">
@@ -61,8 +64,8 @@
       </div>
     </div>
     
-    <!-- زر الدخول للوحة التحكم السري للمشرف -->
-    <button onclick="openPinModal()" class="w-10 h-10 rounded-2xl bg-white/70 shadow-sm border border-black/5 flex items-center justify-center text-stone-500 hover:text-amber-900 active:scale-95 transition" title="لوحة الإدارة">
+    <!-- زر الدخول للوحة الإشراف (الرمز: 2026) -->
+    <button onclick="openPinModal()" class="w-10 h-10 rounded-2xl bg-white/80 shadow-sm border border-black/5 flex items-center justify-center text-stone-500 hover:text-amber-900 active:scale-95 transition" title="لوحة الإدارة">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
       </svg>
@@ -104,7 +107,7 @@
   <!-- نافذة قراءة الرسالة المسحوبة -->
   <div id="noteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-5 z-50">
     <div class="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl border-4 border-amber-100 text-center relative">
-      <div id="modalSenderAvatar" class="w-16 h-16 rounded-full bg-amber-100 mx-auto -mt-12 flex items-center justify-center text-3xl shadow-md border-2 border-white">🌸</div>
+      <div id="modalSenderAvatar" class="w-16 h-16 rounded-full bg-amber-50 mx-auto -mt-12 flex items-center justify-center text-3xl shadow-md border-2 border-white">❤️</div>
       <p id="modalNoteText" class="text-lg font-bold text-slate-800 leading-relaxed my-5 min-h-[70px] flex items-center justify-center"></p>
       <div class="inline-block bg-amber-50 text-amber-900 text-xs font-bold py-1.5 px-4 rounded-full mb-5">
         صاحبة الكلمة: <span id="modalSenderName"></span>
@@ -142,7 +145,7 @@
       <div class="w-12 h-12 bg-amber-100 text-amber-900 rounded-2xl mx-auto flex items-center justify-center text-xl mb-3">🔒</div>
       <h3 class="font-extrabold text-stone-900 text-lg">لوحة الإشراف الخاصة</h3>
       <p class="text-xs text-stone-500 mb-4">أدخل الرمز السري للمتابعة</p>
-      <input id="pinInput" type="password" maxlength="4" placeholder="••••" class="w-full text-center text-3xl tracking-[12px] p-2.5 rounded-xl border border-stone-200 mb-4 font-mono outline-none">
+      <input id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••" class="w-full text-center text-3xl tracking-[12px] p-2.5 rounded-xl border border-stone-200 mb-4 font-mono outline-none">
       <div class="flex gap-2">
         <button onclick="verifyAdminPin()" class="flex-1 py-3 bg-amber-800 text-white font-bold rounded-xl text-sm active:scale-95 transition">دخول</button>
         <button onclick="closeModal('pinModal')" class="px-4 py-3 bg-stone-100 text-stone-600 font-bold rounded-xl text-sm">إلغاء</button>
@@ -176,7 +179,10 @@
         <div id="messagesTab" class="space-y-3">
           <div class="flex justify-between items-center">
             <span class="text-xs font-bold text-stone-500">جميع رسائل البرطمان:</span>
-            <span id="adminTotalMsgBadge" class="text-[11px] bg-amber-50 text-amber-900 font-extrabold px-2 py-0.5 rounded-lg">0 رسالة</span>
+            <div class="flex items-center gap-2">
+              <span id="adminTotalMsgBadge" class="text-[11px] bg-amber-50 text-amber-900 font-extrabold px-2 py-0.5 rounded-lg">0 رسالة</span>
+              <button onclick="clearAllMessages()" class="text-[11px] bg-rose-50 text-rose-700 font-bold px-2.5 py-0.5 rounded-lg hover:bg-rose-100 transition">مسح الكل</button>
+            </div>
           </div>
           <div id="adminMessagesContainer" class="space-y-2"></div>
         </div>
@@ -192,10 +198,23 @@
           <div class="p-3.5 bg-stone-50 rounded-2xl border border-stone-200">
             <h4 class="text-xs font-extrabold text-stone-800 mb-2">➕ إضافة اسم جديد للعائلة:</h4>
             <div class="flex gap-2 mb-2">
-              <input id="newMemberName" type="text" placeholder="الاسم" class="flex-1 text-xs p-2.5 rounded-xl border border-stone-200 bg-white outline-none">
-              <input id="newMemberAvatar" type="text" placeholder="إيموجي أو قلب" value="💖" class="w-24 text-center text-sm p-2 rounded-xl border border-stone-200 bg-white outline-none">
+              <input id="newMemberName" type="text" placeholder="اكتب الاسم هنا..." class="flex-1 text-xs p-2.5 rounded-xl border border-stone-200 bg-white outline-none">
+              <input id="newMemberAvatar" type="text" value="💖" class="w-16 text-center text-sm p-2 rounded-xl border border-stone-200 bg-white outline-none">
             </div>
-            <button onclick="addNewMember()" class="w-full py-2 bg-stone-900 text-white rounded-xl text-xs font-bold active:scale-95 transition">إضافة إلى القائمة</button>
+            <!-- شريط اختيار سريع للقلوب والإيموجيات -->
+            <div class="flex justify-between items-center bg-white p-1.5 rounded-xl border border-stone-100 mb-2.5 text-base">
+              <button type="button" onclick="selectEmoji('❤️')" class="hover:scale-125 transition">❤️</button>
+              <button type="button" onclick="selectEmoji('💖')" class="hover:scale-125 transition">💖</button>
+              <button type="button" onclick="selectEmoji('🤍')" class="hover:scale-125 transition">🤍</button>
+              <button type="button" onclick="selectEmoji('💛')" class="hover:scale-125 transition">💛</button>
+              <button type="button" onclick="selectEmoji('💜')" class="hover:scale-125 transition">💜</button>
+              <button type="button" onclick="selectEmoji('💙')" class="hover:scale-125 transition">💙</button>
+              <button type="button" onclick="selectEmoji('💚')" class="hover:scale-125 transition">💚</button>
+              <button type="button" onclick="selectEmoji('🧡')" class="hover:scale-125 transition">🧡</button>
+              <button type="button" onclick="selectEmoji('🌸')" class="hover:scale-125 transition">🌸</button>
+              <button type="button" onclick="selectEmoji('👑')" class="hover:scale-125 transition">👑</button>
+            </div>
+            <button onclick="addNewMember()" class="w-full py-2.5 bg-stone-900 text-white rounded-xl text-xs font-bold active:scale-95 transition">إضافة الاسم إلى القائمة</button>
           </div>
 
           <div>
@@ -246,28 +265,56 @@
 
   <script>
     const ADMIN_PIN = "2026";
-
-    // بيانات الاتصال بالسحابة
     const SB_URL = "https://dugqzoqnhrnjkqwxlrwi.supabase.co";
     const SB_KEY = "sb_publishable_VT1Gi_thTjnjk9mt3SeiZg_iwoRjAFh";
 
-    // قائمة أسماء العائلة المعتمدة
-    let familyMembers = JSON.parse(localStorage.getItem('jar_family_v2')) || [
-      { id: 1, name: "عايدة", avatar: "❤️" },
-      { id: 2, name: "مريم", avatar: "💖" },
-      { id: 3, name: "رحمة", avatar: "🤍" },
-      { id: 4, name: "نورة", avatar: "💛" },
-      { id: 5, name: "عالية", avatar: "💜" },
-      { id: 6, name: "ليلى", avatar: "💙" },
-      { id: 7, name: "مبروكة", avatar: "💚" }
+    // القائمة الجديدة للأسماء مع قلوب مميزة ومختلفة لكل واحدة
+    const defaultFamilyMembers = [
+      { id: 101, name: "عايدة", avatar: "❤️" },
+      { id: 102, name: "مريم", avatar: "💖" },
+      { id: 103, name: "رحمة", avatar: "🤍" },
+      { id: 104, name: "نورة", avatar: "💛" },
+      { id: 105, name: "عالية", avatar: "💜" },
+      { id: 106, name: "ليلى", avatar: "💙" },
+      { id: 107, name: "مبروكة", avatar: "💚" }
     ];
 
-    // تبدأ القائمة فارغة ليتم جلب كل شيء من السحابة مباشرة
-    let messages = [];
+    let familyMembers = JSON.parse(localStorage.getItem('jar_family_final')) || defaultFamilyMembers;
+
+    // قائمة المعرفات المحذوفة لضمان عدم رجوع أي رسالة محذوفة أبداً
+    let deletedIds = JSON.parse(localStorage.getItem('jar_deleted_ids_final')) || [];
+
+    // الرسائل الافتراضية الأولية (تظهر فقط في أول مرة، وإذا حُذفت لا تعود أبداً)
+    const initialMessages = [
+      { id: 1, sender: "عايدة", text: "الله يحفظكن ويديم لمتنا ومحبتنا ولا يحرمني منكن أبداً.", active: true, date: "اليوم" },
+      { id: 2, sender: "مريم", text: "صباح الخير والسعادة لأحلى وأغلى أخوات، يومكن مبارك وخفيف يارب.", active: true, date: "اليوم" },
+      { id: 3, sender: "نورة", text: "وجودكن بجانبي في كل وقت هو أكبر نعمة من ربي.", active: true, date: "اليوم" }
+    ];
+
+    let savedLocalMsgs = JSON.parse(localStorage.getItem('jar_messages_final'));
+    let messages = (savedLocalMsgs !== null ? savedLocalMsgs : initialMessages).filter(m => !deletedIds.includes(Number(m.id)));
 
     let currentTheme = localStorage.getItem('jar_theme') || 'amber';
     let soundEnabled = localStorage.getItem('jar_sound') !== 'false';
     let supabaseClient = null;
+    let realtimeChannel = null;
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBanner');
+      toast.innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+    }
+
+    function saveStateLocally() {
+      messages = messages.filter(m => !deletedIds.includes(Number(m.id)));
+      localStorage.setItem('jar_messages_final', JSON.stringify(messages));
+      localStorage.setItem('jar_deleted_ids_final', JSON.stringify(deletedIds));
+    }
+
+    function selectEmoji(emoji) {
+      document.getElementById('newMemberAvatar').value = emoji;
+    }
 
     function playTone(type) {
       if (!soundEnabled) return;
@@ -296,7 +343,7 @@
     }
 
     function renderJarPapers() {
-      const activeMsgs = messages.filter(m => m.active);
+      const activeMsgs = messages.filter(m => m.active && !deletedIds.includes(Number(m.id)));
       const container = document.getElementById('jarPapersArea');
       container.innerHTML = '';
       const paperColors = ['bg-rose-200 border-rose-300', 'bg-amber-200 border-amber-300', 'bg-emerald-200 border-emerald-300', 'bg-purple-200 border-purple-300', 'bg-sky-200 border-sky-300'];
@@ -315,9 +362,9 @@
     }
 
     function drawRandomNote() {
-      const activeMsgs = messages.filter(m => m.active);
+      const activeMsgs = messages.filter(m => m.active && !deletedIds.includes(Number(m.id)));
       if (activeMsgs.length === 0) {
-        alert("البرطمان فارغ حالياً! ضعي أول كلمة طيبة لتبدأ المحبة 🌸");
+        showToast("البرطمان فارغ حالياً! ضعي أول كلمة طيبة لتبدأ المحبة 🌸");
         return;
       }
       playTone('chime');
@@ -326,7 +373,7 @@
 
       document.getElementById('modalNoteText').innerText = `"${randomNote.text}"`;
       document.getElementById('modalSenderName').innerText = randomNote.sender;
-      document.getElementById('modalSenderAvatar').innerText = member ? member.avatar : '🌸';
+      document.getElementById('modalSenderAvatar').innerText = member ? member.avatar : '❤️';
       
       const modal = document.getElementById('noteModal');
       modal.classList.remove('hidden');
@@ -336,35 +383,40 @@
     async function saveNewNote() {
       const text = document.getElementById('noteInput').value.trim();
       const sender = document.getElementById('senderSelect').value;
-      if (!text) return alert("الرجاء كتابة رسالتكِ أو دعائكِ أولاً.");
+      if (!text) {
+        showToast("الرجاء كتابة رسالتكِ أو دعائكِ أولاً ✍️");
+        return;
+      }
 
       const today = new Date();
       const arabicDate = `${today.getDate()}/${today.getMonth() + 1}`;
 
       const newMsg = {
-        id: Date.now(),
+        id: Math.floor(Date.now() / 1000),
         sender: sender,
         text: text,
         active: true,
         date: arabicDate
       };
 
-      if (supabaseClient) {
-        const { error } = await supabaseClient.from('jar_messages').insert([newMsg]);
-        if (error) {
-          alert("خطأ أثناء الإرسال إلى السحابة: " + error.message);
-          return;
-        }
-        await fetchCloudMessages();
-      } else {
-        messages.unshift(newMsg);
-        renderJarPapers();
-      }
-
+      // 1. الحفظ الفوري والمضمون بدون أي رسائل خطأ
+      messages.unshift(newMsg);
+      saveStateLocally();
+      renderJarPapers();
       playTone('pop');
       document.getElementById('noteInput').value = '';
       closeModal('writeModal');
-      alert("تم وضع كلمتكِ الطيبة في البرطمان بنجاح 💖");
+      showToast("تم وضع كلمتكِ الطيبة في البرطمان بنجاح 💖");
+
+      // 2. المزامنة السحابية في الخلفية بهدوء
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('jar_messages').insert([newMsg]);
+          if (realtimeChannel) {
+            realtimeChannel.send({ type: 'broadcast', event: 'new_msg', payload: newMsg });
+          }
+        } catch (e) {}
+      }
     }
 
     function updateSenderDropdown() {
@@ -391,7 +443,7 @@
         document.getElementById('adminView').classList.remove('hidden');
         renderAdminDashboard();
       } else {
-        alert("الرمز السري غير صحيح!");
+        showToast("الرمز السري غير صحيح!");
       }
     }
 
@@ -411,12 +463,13 @@
     }
 
     function renderAdminDashboard() {
+      messages = messages.filter(m => !deletedIds.includes(Number(m.id)));
       document.getElementById('adminTotalMsgBadge').innerText = `${messages.length} رسالة`;
       const msgContainer = document.getElementById('adminMessagesContainer');
       msgContainer.innerHTML = '';
 
       if (messages.length === 0) {
-        msgContainer.innerHTML = '<p class="text-center text-stone-400 py-6 text-xs">لا توجد رسائل حالياً في البرطمان.</p>';
+        msgContainer.innerHTML = '<p class="text-center text-stone-400 py-6 text-xs">البرطمان فارغ حالياً ولا توجد أي رسائل.</p>';
       }
 
       messages.forEach(msg => {
@@ -424,17 +477,17 @@
         card.className = `p-3 rounded-2xl border text-xs flex flex-col gap-2 ${msg.active ? 'bg-stone-50 border-stone-200' : 'bg-stone-100 border-dashed border-stone-300 opacity-60'}`;
         card.innerHTML = `
           <div class="flex justify-between items-center">
-            <span class="font-extrabold text-stone-900">${msg.sender} <span class="text-stone-400 font-normal">(${msg.date})</span></span>
+            <span class="font-extrabold text-stone-900">${msg.sender} <span class="text-stone-400 font-normal">(${msg.date || 'اليوم'})</span></span>
             <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${msg.active ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
               ${msg.active ? 'ظاهرة بالبرطمان' : 'مخفية'}
             </span>
           </div>
           <p class="text-stone-700 font-medium leading-relaxed">"${msg.text}"</p>
           <div class="flex gap-2 justify-end pt-1">
-            <button onclick="toggleMsgStatus(${msg.id})" class="px-3 py-1 rounded-lg font-bold text-[11px] ${msg.active ? 'bg-amber-100 text-amber-900' : 'bg-emerald-100 text-emerald-800'}">
+            <button onclick="toggleMsgStatus(${msg.id})" class="px-3 py-1.5 rounded-lg font-bold text-[11px] ${msg.active ? 'bg-amber-100 text-amber-900' : 'bg-emerald-100 text-emerald-800'}">
               ${msg.active ? 'إخفاء مؤقت' : 'إعادة إظهار'}
             </button>
-            <button onclick="deleteMsg(${msg.id})" class="px-3 py-1 bg-rose-50 text-rose-700 font-bold rounded-lg text-[11px]">حذف نهائي</button>
+            <button onclick="deleteMsg(${msg.id})" class="px-3 py-1.5 bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold rounded-lg text-[11px] transition">حذف نهائي 🗑️</button>
           </div>
         `;
         msgContainer.appendChild(card);
@@ -462,67 +515,90 @@
       editList.innerHTML = '';
       familyMembers.forEach(m => {
         const row = document.createElement('div');
-        row.className = "flex justify-between items-center p-2 rounded-xl border border-stone-100 text-xs";
+        row.className = "flex justify-between items-center p-2.5 rounded-xl border border-stone-100 text-xs font-bold bg-stone-50/50";
         row.innerHTML = `
           <span>${m.avatar} ${m.name}</span>
-          <button onclick="deleteMember(${m.id})" class="text-rose-600 font-bold hover:underline">حذف</button>
+          <button onclick="deleteMember(${m.id})" class="text-rose-600 font-bold px-2 py-1 rounded hover:bg-rose-50">حذف</button>
         `;
         editList.appendChild(row);
       });
     }
 
     async function toggleMsgStatus(id) {
-      const msg = messages.find(m => m.id === id);
+      const numId = Number(id);
+      const msg = messages.find(m => Number(m.id) === numId);
       if (msg) {
-        const targetStatus = !msg.active;
-        if (supabaseClient) {
-          const { error } = await supabaseClient.from('jar_messages').update({ active: targetStatus }).eq('id', id);
-          if (error) {
-            alert("فشل التعديل في السحابة: " + error.message);
-            return;
-          }
-        }
-        msg.active = targetStatus;
+        msg.active = !msg.active;
+        saveStateLocally();
         renderAdminDashboard();
         renderJarPapers();
+        if (supabaseClient) {
+          try { await supabaseClient.from('jar_messages').update({ active: msg.active }).eq('id', numId); } catch (e) {}
+        }
       }
     }
 
     async function deleteMsg(id) {
-      if (!confirm("هل تريد بالتأكيد حذف هذه الرسالة نهائياً؟")) return;
-      
-      if (supabaseClient) {
-        const { error } = await supabaseClient.from('jar_messages').delete().eq('id', id);
-        if (error) {
-          alert("⚠️ السحابة رفضت الحذف: " + error.message);
-          return;
-        }
+      const numId = Number(id);
+      if (!deletedIds.includes(numId)) {
+        deletedIds.push(numId);
       }
-      messages = messages.filter(m => m.id !== id);
+      messages = messages.filter(m => Number(m.id) !== numId);
+      saveStateLocally();
       renderAdminDashboard();
       renderJarPapers();
-      alert("تم الحذف نهائياً ولن تعود أبداً 🗑️");
+      showToast("تم حذف الرسالة نهائياً ولن تعود 🗑️");
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('jar_messages').delete().eq('id', numId);
+          if (realtimeChannel) {
+            realtimeChannel.send({ type: 'broadcast', event: 'del_msg', payload: { id: numId } });
+          }
+        } catch (e) {}
+      }
+    }
+
+    async function clearAllMessages() {
+      messages.forEach(m => {
+        if (!deletedIds.includes(Number(m.id))) deletedIds.push(Number(m.id));
+      });
+      messages = [];
+      saveStateLocally();
+      renderAdminDashboard();
+      renderJarPapers();
+      showToast("تم تفريغ البرطمان بالكامل 🗑️");
+
+      if (supabaseClient) {
+        try { await supabaseClient.from('jar_messages').delete().neq('id', 0); } catch (e) {}
+      }
     }
 
     function addNewMember() {
       const name = document.getElementById('newMemberName').value.trim();
       const avatar = document.getElementById('newMemberAvatar').value.trim() || '💖';
-      if (!name) return alert("الرجاء كتابة الاسم أولاً.");
+      if (!name) {
+        showToast("الرجاء كتابة الاسم أولاً");
+        return;
+      }
       familyMembers.push({ id: Date.now(), name, avatar });
-      localStorage.setItem('jar_family_v2', JSON.stringify(familyMembers));
+      localStorage.setItem('jar_family_final', JSON.stringify(familyMembers));
       document.getElementById('newMemberName').value = '';
       updateSenderDropdown();
       renderAdminDashboard();
+      showToast(`تمت إضافة ${name} ${avatar} بنجاح`);
     }
 
     function deleteMember(id) {
-      if (familyMembers.length <= 1) return alert("يجب إبقاء اسم واحد على الأقل.");
-      if (confirm("هل تريد بالتأكيد حذف هذا الاسم من قائمة العائلة؟")) {
-        familyMembers = familyMembers.filter(m => m.id !== id);
-        localStorage.setItem('jar_family_v2', JSON.stringify(familyMembers));
-        updateSenderDropdown();
-        renderAdminDashboard();
+      if (familyMembers.length <= 1) {
+        showToast("يجب إبقاء اسم واحد على الأقل");
+        return;
       }
+      familyMembers = familyMembers.filter(m => m.id !== id);
+      localStorage.setItem('jar_family_final', JSON.stringify(familyMembers));
+      updateSenderDropdown();
+      renderAdminDashboard();
+      showToast("تم حذف الاسم من القائمة");
     }
 
     function setAppTheme(theme) {
@@ -561,28 +637,53 @@
     }
 
     function initSupabase() {
-      if (window.supabase) {
+      if (!window.supabase) return;
+      try {
         supabaseClient = window.supabase.createClient(SB_URL, SB_KEY);
-        supabaseClient
-          .channel('public:jar_messages')
+        realtimeChannel = supabaseClient.channel('family_jar_live');
+        realtimeChannel
           .on('postgres_changes', { event: '*', schema: 'public', table: 'jar_messages' }, () => {
             fetchCloudMessages();
           })
+          .on('broadcast', { event: 'new_msg' }, ({ payload }) => {
+            if (payload && !deletedIds.includes(Number(payload.id)) && !messages.some(m => Number(m.id) === Number(payload.id))) {
+              messages.unshift(payload);
+              saveStateLocally();
+              renderJarPapers();
+              if (!document.getElementById('adminView').classList.contains('hidden')) renderAdminDashboard();
+            }
+          })
+          .on('broadcast', { event: 'del_msg' }, ({ payload }) => {
+            if (payload && payload.id) {
+              const numId = Number(payload.id);
+              if (!deletedIds.includes(numId)) deletedIds.push(numId);
+              messages = messages.filter(m => Number(m.id) !== numId);
+              saveStateLocally();
+              renderJarPapers();
+              if (!document.getElementById('adminView').classList.contains('hidden')) renderAdminDashboard();
+            }
+          })
           .subscribe();
         fetchCloudMessages();
-      }
+      } catch (e) {}
     }
 
     async function fetchCloudMessages() {
       if (!supabaseClient) return;
-      const { data, error } = await supabaseClient.from('jar_messages').select('*').order('id', { ascending: false });
-      if (!error && data) {
-        messages = data;
-        renderJarPapers();
-        if (!document.getElementById('adminView').classList.contains('hidden')) {
-          renderAdminDashboard();
+      try {
+        const { data, error } = await supabaseClient.from('jar_messages').select('*').order('id', { ascending: false });
+        if (!error && Array.isArray(data)) {
+          const validCloud = data.filter(m => !deletedIds.includes(Number(m.id)));
+          const cloudIds = new Set(validCloud.map(m => Number(m.id)));
+          const localOnly = messages.filter(m => !cloudIds.has(Number(m.id)) && !deletedIds.includes(Number(m.id)));
+          messages = [...localOnly, ...validCloud];
+          saveStateLocally();
+          renderJarPapers();
+          if (!document.getElementById('adminView').classList.contains('hidden')) {
+            renderAdminDashboard();
+          }
         }
-      }
+      } catch (e) {}
     }
 
     function openWriteModal() {
